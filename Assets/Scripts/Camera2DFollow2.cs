@@ -10,7 +10,7 @@ namespace UnityStandardAssets._2D
         public float lookAheadFactor = 3;
         public float lookAheadReturnSpeed = 0.8f;
         public float lookAheadMoveThreshold = 0.4f;
-        public int xRotation = 50;
+        public float xRotation = 50f;
 
         private float m_OffsetZ;
         private Vector3 m_LastTargetPosition;
@@ -49,22 +49,25 @@ namespace UnityStandardAssets._2D
             Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward*m_OffsetZ;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
 
-
+            
             if (Input.GetAxis("Mouse ScrollWheel") > 0) { if (initial_y >= 3.5f) { initial_y -= 0.6f; m_OffsetZ += 0.5f; } }
 
             if (Input.GetAxis("Mouse ScrollWheel") < 0) { if (initial_y <= 10f) { initial_y += 0.6f; m_OffsetZ -= 0.5f; } }
 
             if (Input.GetKeyUp(KeyCode.Q))
             {
-                yRotation += Input.GetAxis("Horizontal");
-                transform.eulerAngles = new Vector3(xRotation, yRotation -= 90, 0); transform.position = new Vector3(5, 0, 0); 
+ //               yRotation += Input.GetAxis("Horizontal");
+ //               transform.eulerAngles = new Vector3(xRotation, yRotation -= 90, 0); 
+ //               target.transform.rotation = Quaternion.Euler(xRotation, yRotation -= 90, 0);
+                transform.parent.rotation = Quaternion.Euler(xRotation, yRotation -= 90, 0); 
             }
             if (Input.GetKeyUp(KeyCode.E))
             {
-                yRotation -= Input.GetAxis("Horizontal");
-                transform.eulerAngles = new Vector3(xRotation, yRotation += 90, 0); transform.position = new Vector3(5, 0, 0);
+ //               yRotation -= Input.GetAxis("Horizontal");
+ //               transform.eulerAngles = new Vector3(xRotation, yRotation += 90, 0);
+ //               target.transform.rotation = Quaternion.Euler(xRotation, yRotation += 90, 0);
+                transform.parent.rotation = Quaternion.Euler(xRotation, yRotation += 90, 0);
             }
-
 
             newPos.y = initial_y + target.transform.position.y;
 
